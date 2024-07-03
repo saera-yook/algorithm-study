@@ -1,4 +1,4 @@
-- String.chars()
+- String.chars()<br>
     return : IntStream
-- IntStream.count()
+- IntStream.count()<br>
     return : Long
