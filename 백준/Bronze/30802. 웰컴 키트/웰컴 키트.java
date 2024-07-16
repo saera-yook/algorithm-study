@@ -3,24 +3,30 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.StringTokenizer;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
         int participants = Integer.parseInt(br.readLine());
-        int[] tShirtsQuantities = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-        int[] bundleQuantities = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-        bw.write(String.valueOf(Arrays.stream(tShirtsQuantities)
-                .map(number -> {
-                    if (number % bundleQuantities[0] == 0) {
-                        return number / bundleQuantities[0];
-                    }
-                    return number / bundleQuantities[0] + 1;
-                }).sum()));
-        bw.newLine();
-        bw.write(participants / bundleQuantities[1] + " " + participants % bundleQuantities[1]);
+        StringTokenizer stk1 = new StringTokenizer(br.readLine());
+        StringTokenizer stk2 = new StringTokenizer(br.readLine());
+        int shirtBundleQuantity = Integer.parseInt(stk2.nextToken());
+        int penBundleQuantity = Integer.parseInt(stk2.nextToken());
+        sb.append(Collections.list(stk1).stream()
+                        .mapToInt(token -> Integer.parseInt(token.toString()))
+                        .map(number -> {
+                            if (number % shirtBundleQuantity == 0) {
+                                return number / shirtBundleQuantity;
+                            }
+                            return number / shirtBundleQuantity + 1;
+                        }).sum())
+                .append(System.lineSeparator());
+        sb.append(participants / penBundleQuantity).append(" ").append(participants % penBundleQuantity);
+        bw.write(sb.toString());
         bw.close();
     }
 }
