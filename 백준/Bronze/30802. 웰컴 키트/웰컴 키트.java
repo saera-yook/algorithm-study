@@ -3,7 +3,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.Collections;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -16,15 +15,16 @@ public class Main {
         StringTokenizer stk2 = new StringTokenizer(br.readLine());
         int shirtBundleQuantity = Integer.parseInt(stk2.nextToken());
         int penBundleQuantity = Integer.parseInt(stk2.nextToken());
-        sb.append(Collections.list(stk1).stream()
-                        .mapToInt(token -> Integer.parseInt(token.toString()))
-                        .map(number -> {
-                            if (number % shirtBundleQuantity == 0) {
-                                return number / shirtBundleQuantity;
-                            }
-                            return number / shirtBundleQuantity + 1;
-                        }).sum())
-                .append(System.lineSeparator());
+        int order = 0;
+        for (int i = 0; i < 6; i++) {
+            int number = Integer.parseInt(stk1.nextToken());
+            if (number % shirtBundleQuantity == 0) {
+                order += number / shirtBundleQuantity;
+            } else {
+                order += number / shirtBundleQuantity + 1;
+            }
+        }
+        sb.append(order).append(System.lineSeparator());
         sb.append(participants / penBundleQuantity).append(" ").append(participants % penBundleQuantity);
         bw.write(sb.toString());
         bw.close();
