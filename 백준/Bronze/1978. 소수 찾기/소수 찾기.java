@@ -17,23 +17,14 @@ public class Main {
         for (int i = 0; i < count; i++) {
             Integer number = Integer.valueOf(stk.nextToken());
             if (1 != number) {
-                numbers.add(number);    
+                numbers.add(number);
             }
         }
-        long primeNumberCount = numbers.stream()
-                .filter(number -> number % 2 != 0 || number == 2)
-                .filter(number -> number % 3 != 0 || number == 3)
-                .filter(number -> number % 5 != 0 || number == 5)
-                .filter(number -> number % 7 != 0 || number == 7)
-                .filter(number -> number % 11 != 0 || number == 11)
-                .filter(number -> number % 13 != 0 || number == 13)
-                .filter(number -> number % 17 != 0 || number == 17)
-                .filter(number -> number % 19 != 0 || number == 19)
-                .filter(number -> number % 23 != 0 || number == 23)
-                .filter(number -> number % 29 != 0 || number == 29)
-                .filter(number -> number % 31 != 0 || number == 31)
-                .count();
-        bw.write(String.valueOf(primeNumberCount));
+        int[] primeNumbers = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31};
+        for (int i : primeNumbers) {
+            numbers.removeIf(j -> i != j && j % i == 0);
+        }
+        bw.write(String.valueOf(numbers.size()));
         bw.close();
     }
 }
