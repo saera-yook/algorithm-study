@@ -12,18 +12,15 @@ public class Main {
         int N = Integer.parseInt(br.readLine());
         StringTokenizer stk = new StringTokenizer(br.readLine());
         int M = 0;
-        int sum = 0;
-        int newM;
+        double sum = 0;
         for (int i = 0; i < N; i++) {
             int score = Integer.parseInt(stk.nextToken());
-            newM = score;
-            if (newM > M) {
-                M = newM;
+            if (score > M) {
+                M = score;
             }
             sum += score;
         }
-        double answer = (double) 100 * sum / (N * M);
-        bw.write(String.valueOf(answer));
+        bw.write(String.valueOf(100 * sum / (N * M)));
         bw.close();
     }
 }
