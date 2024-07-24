@@ -20,8 +20,7 @@ public class Main {
                 words.add(word);
             }
         }
-        words.sort(Comparator.naturalOrder());
-        words.sort(Comparator.comparing(String::length));
+        words.sort(Comparator.comparing(String::length).thenComparing(Comparator.naturalOrder()));
         for (String word : words) {
             sb.append(word).append(System.lineSeparator());
         }
