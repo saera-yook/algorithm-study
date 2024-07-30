@@ -11,6 +11,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
         StringTokenizer stk = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(stk.nextToken());
         int K = Integer.parseInt(stk.nextToken());
@@ -18,7 +19,7 @@ public class Main {
         for (int i = 0; i < N; i++) {
             numbers.add(i + 1);
         }
-        List<Integer> permutation = new ArrayList<>();
+        sb.append("<");
         int position = 0;
         while (numbers.size() != 1) {
             for (int i = 0; i < K - 1; i++) {
@@ -30,10 +31,10 @@ public class Main {
                     position++;
                 }
             }
-            permutation.add(numbers.remove(position));
+            sb.append(numbers.remove(position)).append(", ");
         }
-        permutation.add(numbers.get(0));
-        bw.write(permutation.toString().replace('[', '<').replace(']', '>'));
+        sb.append(numbers.get(0)).append(">");
+        bw.write(sb.toString());
         bw.flush();
     }
 }
