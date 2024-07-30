@@ -21,16 +21,8 @@ public class Main {
         }
         sb.append("<");
         int position = 0;
-        while (numbers.size() != 1) {
-            for (int i = 0; i < K - 1; i++) {
-                if (position == numbers.size() - 1) {
-                    position = 0;
-                } else if (position > numbers.size() - 1) {
-                    position = 1;
-                } else {
-                    position++;
-                }
-            }
+        for (int i = 0; i < N - 1; i++) {
+            position = (position + K - 1) % (N - i);
             sb.append(numbers.remove(position)).append(", ");
         }
         sb.append(numbers.get(0)).append(">");
