@@ -14,14 +14,14 @@ public class Main {
         StringBuilder sb = new StringBuilder();
         int N = Integer.parseInt(br.readLine());
         Set<Integer> existNumbers = new HashSet<>();
-        String[] inputNumbers = br.readLine().split("\\s+");
+        StringTokenizer stk = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
-            existNumbers.add(Integer.parseInt(inputNumbers[i]));
+            existNumbers.add(Integer.parseInt(stk.nextToken()));
         }
         int M = Integer.parseInt(br.readLine());
-        inputNumbers = br.readLine().split("\\s+");
+        stk = new StringTokenizer(br.readLine());
         for (int i = 0; i < M; i++) {
-            if (existNumbers.contains(Integer.parseInt(inputNumbers[i]))) {
+            if (existNumbers.contains(Integer.parseInt(stk.nextToken()))) {
                 sb.append("1").append("\n");
             } else {
                 sb.append("0").append("\n");
