@@ -15,6 +15,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
         StringTokenizer stk;
         LinkedList<Integer> stack = new LinkedList<>();
         int N = Integer.parseInt(br.readLine());
@@ -25,24 +26,25 @@ public class Main {
                 stack.push(Integer.parseInt(stk.nextToken()));
             } else if (EMPTY.equals(command)) {
                 if (stack.isEmpty()) {
-                    bw.write(1 + System.lineSeparator());
+                    sb.append(1).append(System.lineSeparator());
                 } else {
-                    bw.write(0 + System.lineSeparator());
+                    sb.append(0).append(System.lineSeparator());
                 }
             } else if (SIZE.equals(command)) {
-                bw.write(stack.size() + System.lineSeparator());
+                sb.append(stack.size()).append(System.lineSeparator());
             } else {
                 try {
                     if (TOP.equals(command)) {
-                        bw.write(stack.getFirst() + System.lineSeparator());
+                        sb.append(stack.getFirst()).append(System.lineSeparator());
                     } else {
-                        bw.write(stack.pop() + System.lineSeparator());
+                        sb.append(stack.pop()).append(System.lineSeparator());
                     }
                 } catch (NoSuchElementException e) {
-                    bw.write(-1 + System.lineSeparator());
+                    sb.append(-1).append(System.lineSeparator());
                 }
             }
         }
+        bw.write(sb.toString());
         bw.close();
     }
 }
