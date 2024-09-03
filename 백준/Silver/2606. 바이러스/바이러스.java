@@ -3,10 +3,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -15,41 +12,35 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int C = Integer.parseInt(br.readLine());
         int N = Integer.parseInt(br.readLine());
-        List<Integer> left = new ArrayList<>();
-        List<Integer> right = new ArrayList<>();
-        Set<Integer> network1 = new HashSet<>();
-        network1.add(1);
+        boolean[][] edges = new boolean[C][C];
         StringTokenizer stk;
         for (int i = 0; i < N; i++) {
             stk = new StringTokenizer(br.readLine());
-            int a = Integer.parseInt(stk.nextToken());
-            int b = Integer.parseInt(stk.nextToken());
-            if (network1.contains(a)) {
-                network1.add(b);
-            } else if (network1.contains(b)) {
-                network1.add(a);
-            } else {
-                left.add(a);
-                right.add(b);
-            }
+            int j = Integer.parseInt(stk.nextToken());
+            int k = Integer.parseInt(stk.nextToken());
+            edges[j - 1][k - 1] = true;
+            edges[k - 1][j - 1] = true;
         }
-        boolean isChanged;
-        do {
-            isChanged = false;
-            int k = left.size();
-            for (int i = k - 1; i >= 0; i--) {
-                if (network1.contains(left.get(i))) {
-                    network1.add(right.remove(i));
-                    left.remove(i);
-                    isChanged = true;
-                } else if (network1.contains(right.get(i))) {
-                    network1.add(left.remove(i));
-                    right.remove(i);
-                    isChanged = true;
+        LinkedList<Integer> queue = new LinkedList<>();
+        boolean[] visited = new boolean[C];
+        queue.add(1);
+        visited[0] = true;
+        while (!queue.isEmpty()) {
+            int c = queue.poll();
+            for (int i = 0; i < C; i++) {
+                if (edges[c - 1][i] && !visited[i]) {
+                    queue.offer(i + 1);
+                    visited[i] = true;
                 }
             }
-        } while (isChanged);
-        bw.write(String.valueOf(network1.size() - 1));
+        }
+        int count = 0;
+        for (boolean infected : visited) {
+            if (infected) {
+                count++;
+            }
+        }
+        bw.write(String.valueOf(count - 1));
         br.close();
         bw.close();
     }
