@@ -12,9 +12,12 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
+        int N = Integer.parseInt(br.readLine());
         cases.put(1, 1);
         cases.put(2, 2);
-        bw.write(String.valueOf(calculateCases(Integer.parseInt(br.readLine()))));
+        sb.append(calculateCases(N));
+        bw.write(sb.toString());
         br.close();
         bw.close();
     }
