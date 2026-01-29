@@ -1,0 +1,61 @@
+import java.io.*;
+import java.util.*;
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		String A = st.nextToken();
+		String B = st.nextToken();
+		System.out.println(Math.max(calculate(A), calculate(B)));
+	}
+
+	private static long calculate(String input) {
+		LinkedList<String> stack = new LinkedList();
+		List<String> tokens = parse(input);
+		
+		for(int i = 0; i < tokens.size(); i++) {
+			if("*".equals(tokens.get(i))) {
+				long value = Long.parseLong(stack.removeLast()) * Long.parseLong(tokens.get(i + 1));
+				stack.add(String.valueOf(value));
+				i++;
+			} else {
+				stack.add(tokens.get(i));
+			}
+		}
+
+		long answer = 0;
+		for(int i = 0; i < stack.size(); i++) {
+			String token = stack.get(i);
+			if("+".equals(token)) {
+				answer += Long.parseLong(stack.get(i + 1));
+				i++;
+			} else if("-".equals(token)) {
+				answer -= Long.parseLong(stack.get(i + 1));
+				i++;
+			} else {
+				answer += Long.parseLong(token);
+			}
+		}
+		
+		return answer;
+	}
+
+	private static List<String> parse(String input) {
+		List<String> parsedInput = new ArrayList();
+		
+		char[] chars = input.toCharArray();
+
+		int start = 0;
+		for(int i = 0; i < chars.length; i++) {
+			if(chars[i] < '0' || chars[i] > '9') {
+				String number = input.substring(start, i);
+				parsedInput.add(number);
+				parsedInput.add(input.substring(i, i+1));
+				start = i + 1;
+			}
+		}
+		parsedInput.add(input.substring(start, chars.length));
+	
+		return parsedInput;
+	}
+}
