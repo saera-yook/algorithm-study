@@ -1,0 +1,70 @@
+import java.io.*;
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String input = br.readLine();
+		int N = Integer.parseInt(input.split(" ")[0]);
+		int K = Integer.parseInt(input.split(" ")[1]);
+		int[][] land = new int[N+1][N+1];
+		int[][] value = new int[N+1][N+1];
+		for (int i = 0; i < N; i++) {
+			String[] status = br.readLine().split(" ");
+			for (int k = 0; k < N; k++) {
+				if("0".equals(status[k])) {
+					continue;
+				}
+				if("#".equals(status[k])) {
+					land[i+1][k+1] = -1;
+					value[i+1][k+1] = 0;
+				}
+				if("@".equals(status[k])) {
+					land[i+1][k+1] = -2;
+					value[i+1][k+1] = 0;
+				}
+			}	
+		}
+		for (int i = 0; i < K; i++) {
+			input = br.readLine();
+			int y = Integer.parseInt(input.split(" ")[0]);
+			int x = Integer.parseInt(input.split(" ")[1]);
+			dropBomb(y, x, land, value);
+		}
+		int max = 0;
+		for (int i = 0; i < N; i++) {
+			for (int k = 0; k < N; k++) {
+				max = Math.max(max, value[i+1][k+1]);
+			}
+		}
+		
+		System.out.println(max);
+	}
+
+	private static void dropBomb(int y, int x, int[][] land, int[][] value) {
+		calculateValue(y, x, land, value);
+		if(y-1 > 0) {
+			calculateValue(y-1, x, land, value);
+		}
+		if(y+1 < land[0].length) {
+			calculateValue(y+1, x, land, value);
+		}
+		if(x-1 > 0) {
+			calculateValue(y, x-1, land, value);
+		}
+		if(x+1 < land[0].length) {
+			calculateValue(y, x+1, land, value);
+		}
+	}
+
+	private static void calculateValue(int y, int x, int[][] land, int[][] value) {
+		if(land[y][x] == 0) {
+			value[y][x] += 1;
+			return;
+		}
+		if(land[y][x] == -1) {
+			return;
+		}
+		if(land[y][x] == -2) {
+			value[y][x] += 2;
+		}
+	}
+}
